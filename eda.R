@@ -9,7 +9,6 @@ text_df <- as.tibble(raw_text)
 
 text_df$breakpoint <- str_detect(text_df$value, "^File No")
 View(text_df)
-text_list <- split(text_df$breakpoint)
 text_list <- split(text_df, text_df$breakpoint)
 text_list <- split(text_df, text_df$breakpoint == TRUE)
 View(text_df)
