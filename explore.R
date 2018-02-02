@@ -55,7 +55,7 @@ subject_pattern <- START %R%
 
 text_df$file_no <- str_extract(text_df$value, pattern = file_ID_pattern_short)
 text_df$subject <- str_extract(text_df$value, pattern = subject_pattern)
-text_df$page_no <- str_extract(text_df$value, pattern = START %R% one_or_more(DGT))
+text_df$page_no <- str_extract(text_df$value, pattern = START %R% one_or_more(DGT) %R% END)
 
 text_df$breakpoint <- NULL
 
@@ -81,8 +81,13 @@ text_df %>%
 
 text_df %>% 
   count(file_no, sort = TRUE) # Note which have the most lines. Match this to subjects
+                              # 9110145 is Goldfarb and it's second in length
+                              # How much of this is just the way it's formatted? Need to clean more and re-run
 
 ## Need to scrape that NYT page for names & ranks to match against files.
 
 
 
+## Let's just look at Zach Goldfarb's interview ====
+
+View(text_list[["9110145"]])
