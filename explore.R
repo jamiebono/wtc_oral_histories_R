@@ -84,10 +84,19 @@ text_df %>%
                               # 9110145 is Goldfarb and it's second in length
                               # How much of this is just the way it's formatted? Need to clean more and re-run
 
-## Need to scrape that NYT page for names & ranks to match against files.
-
-
-
 ## Let's just look at Zach Goldfarb's interview ====
 
 View(text_list[["9110145"]])
+
+## Need to scrape that NYT page for names & ranks to match against files.
+
+nyt_list <- read_delim("nyt_list.txt", "\t", 
+                       escape_double = FALSE, col_types = cols(`DATE OF INTERVIEW` = col_date(format = "%m/%d/%y")), 
+                       trim_ws = TRUE)
+View(nyt_list)
+
+nyt_list<- nyt_list %>% 
+  mutate(NAME = gsub("\\(pdf file\\)", "", NAME))
+
+nyt_list %>% 
+  count(TITLE, sort = TRUE)
