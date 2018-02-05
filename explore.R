@@ -56,6 +56,9 @@ subject_pattern <- START %R%
 text_df$file_no <- str_extract(text_df$value, pattern = file_ID_pattern_short)
 text_df$subject <- str_extract(text_df$value, pattern = subject_pattern)
 text_df$page_no <- str_extract(text_df$value, pattern = START %R% one_or_more(DGT) %R% END)
+text_df$question <- str_extract(text_df$value, pattern = q_pattern)
+text_df$answer <- str_extract(text_df$value, pattern = a_pattern)
+
 
 text_df$breakpoint <- NULL
 
@@ -99,4 +102,11 @@ nyt_list<- nyt_list %>%
   mutate(NAME = gsub("\\(pdf file\\)", "", NAME))
 
 nyt_list %>% 
-  count(TITLE, sort = TRUE)
+  filter(str_detect(TITLE, "(F.D.N.Y)")) %>% 
+  count(TITLE, sort = TRUE) %>% 
+  View
+
+nyt_list %>% 
+  filter(str_detect(TITLE, "(E.M.S)")) %>% 
+  count(TITLE, sort = TRUE) %>% 
+  View
